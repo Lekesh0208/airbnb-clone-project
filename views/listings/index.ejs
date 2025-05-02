@@ -1,0 +1,246 @@
+<% layout("/layouts/boilerplate") %>
+
+    <style>
+        #nav-2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #filters {
+            display: flex;
+            /* flex-wrap: wrap; */
+            align-items: center;
+            width: 70%;
+
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+            overflow: hidden;
+
+        }
+
+        .filter {
+            text-align: center;
+            margin-right: 2rem;
+            margin-top: 1.8rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .filter:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .filter i {
+            font-size: 23px;
+        }
+
+        .filter p {
+            font-size: 0.8rem;
+        }
+
+        .tax-switch {
+            display: none;
+        }
+
+        .tax-toggle {
+            border: 1px solid black;
+            border-radius: 1rem;
+            height: 3.25rem;
+            padding: 1rem;
+            margin-left: 3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .scrollBtn {
+            width: 2rem;
+            height: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.352);
+            border-radius: 50%;
+            padding: 0.5rem;
+            display: flex;
+
+            box-shadow: 4px 4px 20px rgba(255, 255, 255, 0.774);
+        }
+        .scrollBtn:hover{
+            cursor: pointer;
+            background-color: rgba(128, 128, 128, 0.164);
+        }
+
+        #left {
+            position: absolute;
+            left: 5.6em;
+        }
+
+
+        #right {
+            position: absolute;
+            right: 30em;
+        }
+    </style>
+
+    <!-- <%= success  %> -->
+
+    <div id="nav-2">
+        <div id="filters">
+            <div id="left" class="scrollBtn">
+                <i class="fa-solid fa-angle-left"></i>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-fire-flame-curved"></i></div>
+                <p>Trending</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain-city"></i></div>
+                <p>Iconic Cities</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain"></i></div>
+                <p>Mountains</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-chess-rook"></i></div>
+                <p>Castles</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-person-swimming"></i></div>
+                <p>Amazing Pools</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain-city"></i></div>
+                <p>Iconic Cities</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain"></i></div>
+                <p>Mountains</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-campground"></i></div>
+                <p>Camping</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-cow"></i></div>
+                <p>Farms</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-regular fa-snowflake"></i></div>
+                <p>Arctic</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-water"></i></div>
+                <p>Sea views</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-igloo"></i></div>
+                <p>Domes</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-sailboat"></i></div>
+                <p>Boats</p>
+            </div>
+
+            <!-- repeated -->
+            <div class="filter">
+                <div><i class="fa-regular fa-snowflake"></i></div>
+                <p>Arctic</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-water"></i></div>
+                <p>Sea views</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-igloo"></i></div>
+                <p>Domes</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-sailboat"></i></div>
+                <p>Boats</p>
+            </div>
+
+            <div id="right" class="scrollBtn">
+                <i class="fa-solid fa-angle-right"></i>
+            </div>
+
+
+        </div>
+        <div class="tax-toggle">
+            <div class="form-check form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                <label class="form-check-label" for="switchCheckDefault">Display with taxes</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-lg-4 row-cols-md-2  row-cols-1" data-scroll>
+        <% for(let listing of allListings){ %>
+            <a href="/listings/<%=listing._id  %>" class="listing-link">
+                <div class="card col listing-card">
+                    <img src="<%=listing.image.url%>" class="card-img-top" alt="..." style="height: 18rem" data-scroll
+                        data-scroll-speed="0.3">
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <b>
+                                <%= listing.title %>
+                            </b>
+                            <br>
+
+                            <!-- modified  with chatgpt because  getting error as  listing.price were getting null just temporary fix -->
+
+                            <% if (listing.price !=null) { %>
+                                &#8377; <%= listing.price.toLocaleString("en-IN") %> /night
+                                    <i class="tax-switch"> &nbsp; &nbsp; + 18% GST</i>
+                                    <% } else { %>
+                                        Price not available
+                                        <% } %>
+
+                        </p>
+                    </div>
+                </div>
+            </a>
+            <% } %>
+    </div>
+
+    <script>
+        let taxSwitch = document.getElementById("switchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+            let taxInfo = document.getElementsByClassName("tax-switch");
+            for (info of taxInfo) {
+                if (info.style.display != "inline") {
+                    info.style.display = "inline";
+                } else {
+                    info.style.display = "none";
+                }
+            }
+        })
+
+        let scrollContainer = document.getElementById("filters");
+        let left = document.getElementById("left");
+        let right = document.getElementById("right");
+
+        left.addEventListener("click", () => {
+            scrollContainer.scrollBy({ left: 200, behavior: "smooth" });
+            
+        });
+
+        right.addEventListener("click", () => {
+            // scrollContainer.scrollLeft -= 200;
+            scrollContainer.scrollBy({ left: -200, behavior: "smooth" });
+            
+        })
+    </script>
+
+
+    <!-- <ul>
+        <% for(let listing of allListings){ %>
+            <li><a href="/listings/<%=listing._id%>"><%= listing.title%></a></li>
+        <% } %>
+    </ul> -->
